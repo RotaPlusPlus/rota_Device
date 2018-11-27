@@ -28,7 +28,7 @@ dht DHT;
 
 BLEPeripheral blePeripheral; 
 BLEService humidService("181B"); // BLE LED Service
-BLECharacteristic humidCharacteristic("2A3A", BLERead | BLENotify, 2);
+BLECharacteristic humidCharacteristic("2A3B", BLERead | BLENotify, 2);
 
 const int ledPin = 13; // pin to use for the LED
 int oldHumidity = 0;  // 
