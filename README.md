@@ -13,6 +13,56 @@ https://www.switch-science.com/catalog/2670/
 Operation in DHTxx sensors (xx = 11-21-22-33-44) as a Humidity Sensor, we have seen.
 http://playground.arduino.cc//Main/DHTLib
 
+## Adjustment of variables for communication
+#### BLEService
+When specifying UUIDs as `181B` on the iOS side
+
+https://github.com/RotaPlusPlus/rota_iOS/blob/master/rota/Controller/HumidityViewController.swift#L93
+
+```swift
+let serviceUUIDs:[AnyObject] = [CBUUID(string: "181B")]
+let lastPeripherals = centralManager.retrieveConnectedPeripherals(withServices: serviceUUIDs as! [CBUUID] )
+```
+
+https://github.com/RotaPlusPlus/rota_iOS/blob/master/rota/Controller/HumidityViewController.swift#L118
+
+```swift
+func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    print("Connect success!")
+    let serviceUUIDs:[AnyObject] = [CBUUID(string: "181B")]
+    connectingPeripheral.discoverServices(serviceUUIDs as! [CBUUID])
+}
+```
+
+then, It is necessary to unify the following to `181B` on Arduino.
+
+https://github.com/RotaPlusPlus/rota_Device/blob/master/YourPacifier.ino#L30
+
+```Arduino
+#include <CurieBLE.h>
+
+BLEPeripheral blePeripheral;
+BLEService humidService("181B"); // BLE LED Service
+```
+
+#### BLECharacteristic
+When specifying UUIDs as `2A3B` on the iOS side
+https://github.com/RotaPlusPlus/rota_iOS/blob/master/rota/Controller/HumidityViewController.swift#L134
+
+```swift
+let characteristicUUIDs: [AnyObject] = [CBUUID(string: "2A3B")]
+connectingPeripheral.discoverCharacteristics(characteristicUUIDs as! [CBUUID],
+                                   for: (peripheral.services?.first)!)
+```
+
+then, It is necessary to unify the following to `2A3B` on Arduino.
+
+https://github.com/RotaPlusPlus/rota_Device/blob/master/YourPacifier.ino#L31
+
+```Arduino
+BLECharacteristic humidCharacteristic("2A3B", BLERead | BLENotify, 2);
+```
+
 ## Run
 Arduino IDE on OSX
 https://www.arduino.cc/en/Main/Software
