@@ -10,7 +10,7 @@ We tested on Genuino 101（Arduino 101 in US）
 https://www.switch-science.com/catalog/2670/
 
 #### Sensor
-Operation in DHTxx sensors (xx = 11-21-22-33-44) as a Humidity Sensor, we have seen.
+Operation in DHT11 sensor as a Humidity Sensor, we have seen.
 http://playground.arduino.cc//Main/DHTLib
 
 ## Adjustment of variables for communication
